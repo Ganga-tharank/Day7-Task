@@ -1,67 +1,131 @@
-var request = new XMLHttpRequest();
-request.open("GET", "https://restcountries.com/v2/all");
-request.send();
-request.onload = function(){
-    var result = JSON.parse(request.response);
-    console.log(result);
+/* ARRAY METHODS */
+
+//Question 1 : Solving problems using array functions on rest countries data (https://restcountries.com/v3.1/all) :
+
+
+// a. Get all the countries from Asia continent /region using Filter function :
+
+//Step 1 : Create a XHR Object
+var Request = new XMLHttpRequest();
+
+//Step 2 : Opening a Connection to the Server
+Request.open("GET","https://restcountries.com/v3.1/all",true)
+
+//Step 3 : Initiating a bridge to the Server / Sending a Request
+Request.send();
+
+//Step 4 : Server Response
+Request.onload = function(){
+    var data = Request.response;
+    //console.log(data);
+    var Result = JSON.parse(data);
+    //console.log(Result);
+
+    var Asia_Reg = Result.filter((country) => country.region === "Asia");
+    Asia_Reg.map((country) => console.log(country.name));
 }
 
-// a)
+/*-----------------------------------------------------------------------------*/
 
-const countries1= [
-    {name: "Afghanistan", region:"Asia"},
-    {name:"India", region:"Asia"},
-    {name:"Japan", region:"Asia"},
-    {name:"Germany", region:"Europe"},
-];
-const asiaCountries = countries1.filter(country => country.region==="Asia");
-console.log(asiaCountries);
+// b. Get all the countries with a population of less than 2 lakhs using Filter function : 
 
+//Step 1 : Create a XHR Object
+var Request1 = new XMLHttpRequest();
 
-// b)
+//Step 2 : Opening a Connection to the Server
+Request1.open("GET","https://restcountries.com/v3.1/all",true)
 
-const countries = [
-    {name:"Australia", population:150000},
-    {name:"India", population:250000},
-    {name:"America", population:180000},
-];
-const countriesWithLowPopulation = countries.filter(country => country.population < 2000000);
-console.log(countriesWithLowPopulation);
+//Step 3 : Initiating a bridge to the Server / Sending a Request
+Request1.send();
 
+//Step 4 : Server Response
+Request1.onload = function(){
+    var data1 = Request1.response;
+    //console.log(data1);
+    var Result1 = JSON.parse(data1);
+    //console.log(Result1);
 
-// c)
+    var population_Res = Result1.filter((x)=>x.population<200000);
+    population_Res.map((ele)=>console.log(ele.name.common));
+}
 
-let countries2 = [
-    {name:"Afghanistan", captial:"kabul", Flag:"ialamic Emirates of afghansitan"},
-    {name:"India", captial:"NewDelhi", Flag:"the tricolor"},
+/*-----------------------------------------------------------------------------*/
 
-];
-countries.forEach(country =>{
-    console.log(`Name: ${country.name},capital: ${country.captial},
-    Flag: ${country.flag}`);
-});
+// c. Print the following details name, capital, flag, using forEach function :
 
-// d)
+//Step 1 : Create a XHR Object
+var Request2 = new XMLHttpRequest();
 
-const country =[
-    {name:"London",population:140000},
-    {name:"Dubai",population:250000},
-    {name:"Russia",population:150000},
-];
-const totalPopulation = country.reduce((accumulator, country)=> accumulator + country.population);
-console.log(`Total Population: ${totalPopulation}`);
+//Step 2 : Opening a Connection to the Server
+Request2.open("GET","https://restcountries.com/v3.1/all",true)
 
+//Step 3 : Initiating a bridge to the Server / Sending a Request
+Request2.send();
 
-// e)
+//Step 4 : Server Response
+Request2.onload = function(){
+    var data2 = Request2.response;
+    //console.log(data2);
+    var Result2 = JSON.parse(data2);
+    //console.log(Result2);
 
-const country1 =[
-    {name:"India", currency: "INR"},
-    {name:"America", currency: "USD"},
-    // {name:"Countryc", currency: "USD"},
-];
-const countryUsingUSD = countries.find(country => countries.currency === "USD");
-if (countryUsingUSD){
-    console.log(`The country using US dollars as currency is : ${countryUsingUSD.name}`);
-}else{
-    console.log(`No country found using US dollars as currency.`);
+    var Details = Result2.forEach((element) =>console.log(`Name : ${element.name.common}, Capital : ${element.capital}, Flag : ${element.flag}`));
+}
+
+/*-----------------------------------------------------------------------------*/
+
+// d. Print the total population of countries using reduce function :
+
+//Step 1 : Create a XHR Object
+var Request3 = new XMLHttpRequest();
+
+//Step 2 : Opening a Connection to the Server
+Request3.open("GET","https://restcountries.com/v3.1/all",true)
+
+//Step 3 : Initiating a bridge to the Server / Sending a Request
+Request3.send();
+
+//Step 4 : Server Response
+Request3.onload = function(){
+    var data3 = Request3.response;
+    //console.log(data3);
+    var Result3 = JSON.parse(data3);
+    //console.log(Result3);
+
+    var TotalPopulation = Result3.reduce((acc,cv)=>{
+        return acc+cv.population
+    },0)
+    console.log(TotalPopulation);
+}
+    
+
+/*-----------------------------------------------------------------------------*/
+
+// e. Print the country that uses US dollars as currency.
+
+//Step 1 : Create a XHR Object
+var Request4 = new XMLHttpRequest();
+
+//Step 2 : Opening a Connection to the Server
+Request4.open("GET","https://restcountries.com/v3.1/all",true)
+
+//Step 3 : Initiating a bridge to the Server / Sending a Request
+Request4.send();
+
+//Step 4 : Server Response
+Request4.onload = function(){
+    var data4 = Request4.response;
+    //console.log(data4);
+    var Result4 = JSON.parse(data4);
+    //console.log(Result4);
+
+    const countriesWithUSD = Result4.filter(country =>
+        country.currencies && country.currencies.USD
+      ).map(country => country.name.common);
+    
+      if (countriesWithUSD.length > 0) {
+        console.log("Countries that use US dollars as currency: " + countriesWithUSD.join(", "));
+      } else {
+        console.log("No countries found that use US dollars as currency.");
+      }
 }
